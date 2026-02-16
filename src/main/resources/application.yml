@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: payment-processing-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_db
+    username: payment_user
+    password: payment_secret
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: false
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+server:
+  port: 8080
+
+# JWT
+jwt:
+  secret: ${JWT_SECRET:your-256-bit-secret-key-for-jwt-signing-change-in-production}
+  expiration-ms: 86400000  # 24 hours
+
+# API Key
+api-key:
+  prefix-length: 8
+  key-length: 32
+
+# Rate limiting
+rate-limit:
+  requests-per-minute: 60
+  window-seconds: 60
+
+# Provider simulation (dev: always succeed)
+payment:
+  provider:
+    simulate-success: true
+    simulate-timeout-ms: 5000
+
+# Webhook shared secret (for provider callback verification)
+webhook:
+  provider-secret: ${WEBHOOK_SECRET:webhook-shared-secret-change-in-production}
+
+logging:
+  level:
+    com.payment: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN
