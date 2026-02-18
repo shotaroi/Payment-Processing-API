@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_test
+    username: test
+    password: test
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  flyway:
+    enabled: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+jwt:
+  secret: test-jwt-secret-key-256-bits-for-testing-only
+  expiration-ms: 3600000
+
+api-key:
+  prefix-length: 4
+  key-length: 16
+
+rate-limit:
+  enabled: false
+  requests-per-minute: 100
+  window-seconds: 60
+
+payment:
+  provider:
+    simulate-success: true
+    simulate-timeout-ms: 100
+
+webhook:
+  provider-secret: test-webhook-secret
+
+logging:
+  level:
+    com.payment: DEBUG
+    org.springframework.security: WARN
